@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>@ViewData["title"] - Merchify</title>
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/Merchify.WebApp.styles.css" asp-append-version="true" />
+</head>
+<body>
+	<nav>
+		<a asp-area="" asp-controller="home" asp-action="index">Home</a>
+		<a asp-area="" asp-controller="categories" asp-action="index">Categories</a>
+	</nav>
+	<div>
+		@RenderSection("title")
+	</div>
+	<main>
+		@RenderBody()
+	</main>
+</body>
+</html>

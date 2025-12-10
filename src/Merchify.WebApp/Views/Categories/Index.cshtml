@@ -1,0 +1,33 @@
+﻿@model List<Category>
+
+@{
+	ViewData["title"] = "Categories Page";
+}
+
+@section title {
+	<h3>Categories</h3>
+}
+
+<table>
+    <thead>
+		 <tr>
+			 <th>Name</th>
+			 <th>Description</th>
+			 <th></th>
+		 </tr>
+	 </thead>
+	 <tbody>
+		@foreach (Category category in Model)
+		{
+		<tr>
+			<td>@category.Name</td>
+			<td>@category.Description</td>
+			 <td>
+					<a asp-controller="categories" asp-action="edit" asp-route-id="@category.Id">📝</a>
+			 </td>
+		</tr>	
+		}
+	</tbody>
+</table>
+
+
