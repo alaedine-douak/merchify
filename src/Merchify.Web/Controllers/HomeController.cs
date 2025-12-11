@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Merchify.WebApp.Controllers;
+namespace Merchify.Web.Controllers;
 
 public class HomeController : Controller
 {

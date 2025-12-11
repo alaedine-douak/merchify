@@ -1,4 +1,4 @@
-﻿namespace Merchify.WebApp.Models;
+﻿namespace Merchify.Web.Models;
 
 public class CategoriesRepository : ICategoryRepository
 {

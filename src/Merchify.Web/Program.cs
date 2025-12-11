@@ -1,4 +1,4 @@
-using Merchify.WebApp.Models;
+using Merchify.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

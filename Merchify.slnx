@@ -6,6 +6,6 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Merchify.WebApp/Merchify.WebApp.csproj" />
+    <Project Path="src/Merchify.Web/Merchify.Web.csproj" />
   </Folder>
 </Solution>

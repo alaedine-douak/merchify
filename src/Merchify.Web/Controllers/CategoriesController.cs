@@ -1,8 +1,8 @@
-﻿using Merchify.WebApp.Models;
+﻿using Merchify.Web.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Merchify.WebApp.Controllers;
+namespace Merchify.Web.Controllers;
 
 [Route("[controller]")]
 public class CategoriesController(
