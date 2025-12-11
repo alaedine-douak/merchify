@@ -5,6 +5,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	<title>@ViewData["title"] - Merchify</title>
+	@RenderSection("styles", required: false)
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/Merchify.WebApp.styles.css" asp-append-version="true" />
 </head>
@@ -19,5 +20,6 @@
 	<main>
 		@RenderBody()
 	</main>
+	@await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

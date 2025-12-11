@@ -1,33 +1,77 @@
 ﻿@model List<Category>
 
 @{
-	ViewData["title"] = "Categories Page";
+	ViewData["title"] = "Categories Page" ?? "";
 }
 
 @section title {
 	<h3>Categories</h3>
 }
 
-<table>
-    <thead>
-		 <tr>
-			 <th>Name</th>
-			 <th>Description</th>
-			 <th></th>
-		 </tr>
-	 </thead>
-	 <tbody>
-		@foreach (Category category in Model)
-		{
-		<tr>
-			<td>@category.Name</td>
-			<td>@category.Description</td>
-			 <td>
-					<a asp-controller="categories" asp-action="edit" asp-route-id="@category.Id">📝</a>
-			 </td>
-		</tr>	
+@section styles {
+	<style>
+		a {
+			font-weight: bold;
+			text-decoration: none;
 		}
-	</tbody>
-</table>
 
+		th {
+			text-align: left;
+		}
+	</style>
+}
+
+<a asp-controller="categories" asp-action="add">➕</a>
+<br />
+<br />
+
+@if (Model is [])
+{
+	<p>No categories provided.</p>
+}
+else
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Category category in Model)
+			{
+				<tr>
+					<td>@category.Name</td>
+					<td>@category.Description</td>
+					<td>
+						<a asp-controller="categories"
+							asp-action="edit"
+							asp-route-id="@category.Id">
+							🖋
+						</a>
+					</td>
+					<td>
+						<a asp-controller="categories"
+							asp-action="delete"
+							asp-route-id="@category.Id"
+							onclick="return confirmDeleteCategory()">
+							❌
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+@section scripts {
+	<script>
+		function confirmDeleteCategory() {
+			return confirm("Are you sure you want to delete this category?");
+		}
+	</script>
+}
 
