@@ -10,42 +10,51 @@ public class CategoriesRepository : ICategoryRepository
       new () { Id = 3, Name = "Meat", Description = "Meat" }
    ];
 
-   public List<Category> GetCategories() => _categories;
+   public List<CategoryDetailVm> GetCategories() =>
+      _categories.Select(category => new CategoryDetailVm {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description
+         })
+         .ToList();
 
-   public Category? GetCategoryById(int id)
+   public CategoryDetailVm? GetCategoryById(int id)
    {
       var category = _categories.FirstOrDefault(x => x.Id == id);
 
       if (category is null) return null;
 
-      return new()
+      return new CategoryDetailVm
       {
          Id = category.Id,
          Name = category.Name,
-         Description = category.Description,
+         Description = category.Description
       };
    }
 
-   public void AddCategory(Category category)
+   public void AddCategory(CreateCategoryVm model)
    {
-      int id = _categories is [] ? 1
-         : _categories.Max(x => x.Id) + 1;
+      int categoryId = _categories is [] ? 1
+         : _categories.Max(category => category.Id) + 1;
 
-      category.Id = id;
+      Category category = new () 
+      { 
+         Id = categoryId, 
+         Name = model.Name, 
+         Description = model.Description 
+      };
 
       _categories.Add(category);
    }
 
-   public void UpdateCategory(int id, Category category)
+   public void UpdateCategory(int id, EditCategoryVm model)
    {
-      if (id != category.Id) return;
+      var category = _categories.FirstOrDefault(x => x.Id == id);
 
-      var categoryToUpdate = _categories.FirstOrDefault(x => x.Id == id);
+      if (category is not { Id: var categoryId } || categoryId != id) return; 
 
-      if (categoryToUpdate is null) return;
-
-      categoryToUpdate.Name = category.Name;
-      categoryToUpdate.Description = category.Description;
+      category.Name = model.Name;
+      category.Description = model.Description;
    }
 
    public void DeleteCategory(int id)

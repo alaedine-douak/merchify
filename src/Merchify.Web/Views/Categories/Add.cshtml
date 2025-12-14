@@ -1,12 +1,12 @@
-﻿@model Category
+﻿@model CreateCategoryVm
 
 @{
 	ViewData["title"] = "Category";
 }
 
-@section title {
-	<h3>New Category</h3>
-}
+@* @section title {
+	<title>Category</title>
+} *@
 
 @section styles {
 	<style>
@@ -18,10 +18,7 @@
 	</style>
 }
 
-<form method="post"
-		asp-controller="categories"
-		asp-action="add"
->
+<form method="post" asp-controller="categories" asp-action="add">
 	<label asp-for="Name">
 		<input asp-for="Name" type="text" />
 	</label>
@@ -35,3 +32,6 @@
 
 	<button type="submit">✔️</button>
 </form>
+
+
+

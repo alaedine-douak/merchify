@@ -1,12 +1,13 @@
-﻿@model List<Category>
+﻿@model List<CategoryDetailVm>
+
 
 @{
-	ViewData["title"] = "Categories Page" ?? "";
+	ViewData["title"] = "Categories Page";
 }
 
-@section title {
-	<h3>Categories</h3>
-}
+@* @section title {
+	<title>@("Categories Page" ?? "")</title>
+} *@
 
 @section styles {
 	<style>
@@ -25,7 +26,7 @@
 <br />
 <br />
 
-@if (Model is [])
+@if (Model is { Count: 0 })
 {
 	<p>No categories provided.</p>
 }
@@ -41,7 +42,7 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (Category category in Model)
+			@foreach (var category in Model)
 			{
 				<tr>
 					<td>@category.Name</td>
@@ -57,7 +58,7 @@ else
 						<a asp-controller="categories"
 							asp-action="delete"
 							asp-route-id="@category.Id"
-							onclick="return confirmDeleteCategory()">
+							onclick="return confirmDelete()">
 							❌
 						</a>
 					</td>
@@ -69,9 +70,10 @@ else
 
 @section scripts {
 	<script>
-		function confirmDeleteCategory() {
-			return confirm("Are you sure you want to delete this category?");
+		function confirmDelete() {
+			return confirm(`Are you sure you want to delete this category`);
 		}
+		
 	</script>
 }
 
