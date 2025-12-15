@@ -1,35 +1,26 @@
-﻿@using Microsoft.AspNetCore.Components
-
-@{
-	var imports = new ImportMapDefinition(
-		new Dictionary<string, string> { { "utils", "/js/utils.js" } },
-		null,
-		null);
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
   	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	<title>@ViewData["title"] - Merchify</title>
-	@* @RenderSection("title", required: false) *@
-	<script type="importmap" asp-importmap="@imports"></script>
-	@RenderSection("styles", required: false)
+	<script type="importmap"></script>
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/Merchify.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
 	<nav>
-		<a asp-area="" asp-controller="home" asp-action="index">Home</a>
-		<a asp-area="" asp-controller="categories" asp-action="index">Categories</a>
+		<a asp-controller="home" asp-action="index">Home</a>|
+		<a asp-controller="categories" asp-action="index">Categories</a>|
+		<a asp-controller="products" asp-action="index">Products</a>
 	</nav>
 
 	<main>
 		@RenderBody()
 	</main>
-	@* <script src="~/js/utils.js" asp-append-version="true"></script> *@
+	<script src="~/lib/htmx/htmx.js"></script>
+	<script src="~/lib/jquery/jquery.js"></script>
 	<script src="~/js/app.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("scripts", required: false)
 </body>

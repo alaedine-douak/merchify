@@ -3,7 +3,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<ICategoryRepository, CategoriesRepository>();
+builder.Services.AddSingleton<ICategoryRepository, CategoryRepository>();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 
 builder.Services.Configure<RouteOptions>(opts => opts.LowercaseUrls = true);
 

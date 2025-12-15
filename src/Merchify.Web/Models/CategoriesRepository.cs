@@ -1,6 +1,6 @@
 ﻿namespace Merchify.Web.Models;
 
-public class CategoriesRepository : ICategoryRepository
+public class CategoryRepository : ICategoryRepository
 {
 
    private static readonly List<Category> _categories =

@@ -1,37 +1,26 @@
 ﻿@model CreateCategoryVm
 
 @{
-	ViewData["title"] = "Category";
+	ViewData["title"] = "Add new category";
 }
 
-@* @section title {
-	<title>Category</title>
-} *@
-
-@section styles {
-	<style>
-		button {
-			border: none;
-			cursor: pointer;
-			background: transparent;
-		}
-	</style>
-}
 
 <form method="post" asp-controller="categories" asp-action="add">
-	<label asp-for="Name">
-		<input asp-for="Name" type="text" />
-	</label>
+	<label asp-for="Name"></label>
+	<input asp-for="Name" type="text" />
 	<span asp-validation-for="Name"></span>
 	<br />
 
-	<label asp-for="Description">
-		<input asp-for="Description" type="text" />
-	</label>
+	<label asp-for="Description"></label>
+	<input asp-for="Description" type="text" />
 	<br />
 
 	<button type="submit">✔️</button>
 </form>
+
+@section scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
 
 
 

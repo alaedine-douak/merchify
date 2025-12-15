@@ -1,26 +1,12 @@
 ﻿@model CategoryDetailVm
 
 @{
-	string? title = "Category Name";
+	string? title = Model.Name ?? "Updating Category";
 
 
 	ViewData["title"] = title;
-
 }
 
-@* @section title {
-	<title>@title</title>
-} *@
-
-@section styles {
-	<style>
-		button {
-			border: none;
-			cursor: pointer;
-			background: transparent;
-		}
-	</style>
-}
 
 <form method="post" asp-controller="categories" asp-action="edit">
 
@@ -36,7 +22,12 @@
 		<input asp-for="Description" type="text" />
 	</label>
 	<br />
+	<br />
 
 	<button type="submit">✔️</button>
 </form>
+
+@section scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
 

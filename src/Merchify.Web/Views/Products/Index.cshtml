@@ -1,0 +1,54 @@
+﻿@model ProductListItemViewModel
+
+@{
+	ViewData["title"] = "Products";
+}
+
+<a asp-controller="products" asp-action="create">➕</a>
+<br />
+<br />
+
+
+@if (Model is { Items: [] })
+{
+	<p>No products provided.</p>
+}
+else
+{
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var product in Model.Items)
+			{
+				<tr>
+					<td>@product.Name</td>
+					<td>@product.Quantity.ToString()</td>
+					<td>@product.Price?.ToString("c")</td>
+					<td>
+						<a asp-controller="products"
+							asp-action="edit"
+							asp-route-id="@product.Id">
+							🖋
+						</a>
+					</td>
+					<td>
+						<a asp-controller="products"
+							asp-action="delete"
+							asp-route-id="@product.Id"
+						>
+							❌
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
