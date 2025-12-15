@@ -4,8 +4,9 @@
     <File Path="global.json" />
     <File Path=".gitignore" />
     <File Path="README.md" />
+    <File Path=".gitattributes" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Merchify.Web/Merchify.Web.csproj" />
+    <Project Path="src/Merchify.Web/Web.csproj" />
   </Folder>
 </Solution>
