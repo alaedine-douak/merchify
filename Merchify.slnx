@@ -7,6 +7,6 @@
     <File Path=".gitattributes" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Merchify.Web/Web.csproj" />
+    <Project Path="src/Web/Web.csproj" />
   </Folder>
 </Solution>
