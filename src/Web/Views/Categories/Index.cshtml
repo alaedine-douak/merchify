@@ -1,17 +1,16 @@
-﻿@model List<CategoryDetailVm>
-
+﻿@model IList<CategoryModel>
 
 @{
 	ViewData["title"] = "Categories Page";
 }
 
-<a asp-controller="categories" asp-action="add">➕</a>
+<a asp-controller="categories" asp-action="insert">➕</a>
 <br />
 <br />
 
-@if (Model is { Count: 0 })
+@if (Model is null or { Count: 0 })
 {
-	<p>No categories provided.</p>
+	<p>Ooops, There is no categories.</p>
 }
 else
 {
@@ -38,7 +37,7 @@ else
 						</a>
 					</td>
 					<td>
-						<a asp-controller="categories"
+						<a asp-controller="Categories"
 							asp-action="delete"
 							asp-route-id="@category.Id"
 							onclick="return confirmDelete()">

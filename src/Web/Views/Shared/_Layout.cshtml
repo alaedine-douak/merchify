@@ -11,15 +11,15 @@
 </head>
 <body>
 	<nav>
-		<a asp-controller="home" asp-action="index">Home</a>|
-		<a asp-controller="categories" asp-action="index">Categories</a>|
-		<a asp-controller="products" asp-action="index">Products</a>
+		<a asp-controller="Home" asp-action="Index">Home</a>|
+		<a asp-controller="Categories" asp-action="Index">Categories</a>|
+		<a asp-controller="Products" asp-action="Index">Products</a>
 	</nav>
 
 	<main>
 		@RenderBody()
 	</main>
-	<script src="~/lib/htmx/htmx.js"></script>
+
 	<script src="~/lib/jquery/jquery.js"></script>
 	<script src="~/js/app.js" asp-append-version="true"></script>
 	@await RenderSectionAsync("scripts", required: false)

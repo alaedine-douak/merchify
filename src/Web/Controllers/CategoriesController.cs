@@ -1,59 +1,71 @@
-﻿using Merchify.Web.Models;
+﻿namespace Merchify.Web.Controllers;
 
-using Microsoft.AspNetCore.Mvc;
-
-namespace Merchify.Web.Controllers;
-
-[Route("[controller]")]
-public class CategoriesController(ICategoryRepository categoryRepo) : Controller
+public class CategoriesController(
+   IRepository<Category> categoryRepo) 
+   : Controller
 {
-
-   private readonly ICategoryRepository _categoryRepo = categoryRepo;
+   private readonly IRepository<Category> _categoryRepo = categoryRepo;
 
    [HttpGet]
-   public IActionResult Index() => View(_categoryRepo.GetCategories());
-
-   [HttpGet("[action]")]
-   public IActionResult Add() 
+   public IActionResult Index()
    {
-      return View();
+      var categories = _categoryRepo.GetAll();
+
+      if (categories is { Count: 0 }) return View();
+
+      List<CategoryModel> categoryList = [.. categories.MapToCategoryModels()];
+
+      return View(categoryList);
    }
 
-   [HttpPost("[action]")]
-   public IActionResult Add(CreateCategoryVm model)
-   {
-      if (ModelState is { IsValid: false }) return View(model);
+   [HttpGet]
+   public IActionResult Insert() => View();
 
-      _categoryRepo.AddCategory(model);
+   [HttpPost]
+   [ValidateAntiForgeryToken]
+   public IActionResult Insert(InsertCategoryModel model)
+   {
+      if (!ModelState.IsValid) return View(model);
+
+      Category category = new() { Name = model.Name, Description = model.Description };
+      
+      _categoryRepo.Insert(category);
 
       return RedirectToAction(nameof(Index));
    }
-
-   [HttpGet("{id:int}/[action]")]
+   
+   
+   [HttpGet("[controller]/{id:int}")]
    public IActionResult Edit(int id)
    {
-      var categoryVM = _categoryRepo.GetCategoryById(id);
+      var category = _categoryRepo.GetById(id);
 
-      if (categoryVM is null) return NotFound();
+      if (category is null) return NotFound();
 
-      return View(categoryVM);
+      CategoryModel categoryModel = category.MapToCategoryModel();
+      
+      return View(categoryModel);
    }
-
-   [HttpPost("{id:int}/[action]")]
-   public IActionResult Edit(int id, EditCategoryVm model)
+   
+   
+   [HttpPost("[controller]/{id:int}")]
+   [ValidateAntiForgeryToken]
+   public IActionResult Edit(int id, CategoryModel model)
    {
-      if (ModelState is { IsValid: false }) return View();
-
-      _categoryRepo.UpdateCategory(id, model);
+      if (id != model.Id) return BadRequest();
+      
+      if (!ModelState.IsValid) return View(model);
+      
+      _categoryRepo.Update(model.MapToCategoryEntity());
 
       return RedirectToAction(nameof(Index));
    }
 
-   [HttpGet("{id:int}/[action]")]
+      
+   [HttpGet("[controller]/{id:int}/delete")]
    public IActionResult Delete(int id)
    {
-      _categoryRepo.DeleteCategory(id);
-
+      _categoryRepo.Delete(id);
       return RedirectToAction(nameof(Index));
    }
 }

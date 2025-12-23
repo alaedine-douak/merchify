@@ -1,4 +1,4 @@
-﻿@model EditProductViewModel
+﻿@model ProductModel
 
 @{
 	string? title = $"Updating {Model.Name}" ?? "Updating product";
@@ -8,8 +8,8 @@
 
 
 <form method="post"
-	asp-controller="products"
-	asp-action="edit">
+	asp-controller="Products"
+	asp-action="Edit">
 	
 	<input type="hidden" asp-for="Id"/> 
 
@@ -18,9 +18,9 @@
 	<span asp-validation-for="Name"></span>
 	<br />
 
-	<label asp-for="Quantity"></label>
-	<input asp-for="Quantity" />
-	<span asp-validation-for="Quantity"></span>
+	<label asp-for="Qty"></label>
+	<input asp-for="Qty" />
+	<span asp-validation-for="Qty"></span>
 	<br/>
 
 	<label asp-for="Price"></label>

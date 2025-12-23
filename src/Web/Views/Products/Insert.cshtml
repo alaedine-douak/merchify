@@ -1,0 +1,33 @@
+@model InsertProductModel
+
+@{
+   ViewData["title"] = "Adding Product";
+}
+
+<form
+   method="post"
+   asp-controller="Products"
+   asp-action="Insert"
+>
+   <label asp-for="Name"></label>
+   <input asp-for="Name"/>
+   <span asp-validation-for="Name"></span>
+   <br/>
+
+   <label asp-for="Qty"></label>
+   <input asp-for="Qty"/>
+   <span asp-validation-for="Qty"></span>
+   <br />
+
+   <label asp-for="Price"></label>
+   <input asp-for="Price" type="number"/>
+   <span asp-validation-for="Price"></span>
+   <br />
+
+   <button type="submit">✔️</button>
+	
+</form>
+
+@section scripts {
+   <partial name="_ValidationScriptsPartial"/>
+}

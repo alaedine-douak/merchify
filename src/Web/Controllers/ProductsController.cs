@@ -1,64 +1,66 @@
 ﻿namespace Merchify.Web.Controllers;
 
 public class ProductsController(
-   IProductRepository productRepository
-   ): BaseController
+   IRepository<Product> productRepo) : Controller
 {
+   private readonly IRepository<Product> _productRepo = productRepo;
 
-   private readonly IProductRepository _productRepository = productRepository;
-
+   [HttpGet]
    public IActionResult Index()
-      => View(_productRepository.GetProducts());
+   {
+      var products = _productRepo.GetAll();
 
-   [Route("[action]")]
-   public IActionResult Create() 
+      return products is { Count: > 0 }
+         ? View((List<ProductModel>)[.. products.MapToProductsModel()])
+         : View();
+   }
+
+   [HttpGet]
+   public IActionResult Insert() 
       => View();
 
-   [HttpPost("[action]")]
+   [HttpPost]
    [ValidateAntiForgeryToken]
-   public IActionResult Create(CreateProductViewModel model)
+   public IActionResult Insert(InsertProductModel model)
    {
       if (ModelState is { IsValid: false }) return View(model);
 
-      _productRepository.CreateProduct(model);
+      Product product = new() { Name = model.Name, Quantity = model.Qty, Price = model.Price };
+      
+      _productRepo.Insert(product);
 
       return RedirectToAction(nameof(Index));
    }
 
-   [HttpGet("{id:int}/[action]")]
+   [HttpGet("[controller]/{id:int}")]
    public IActionResult Edit(int id)
    {
-      var productItemVm = _productRepository.GetProductById(id);
+      var product = _productRepo.GetById(id);
 
-      if (productItemVm is null) return NotFound();
+      if (product is null) return NotFound();
 
-      EditProductViewModel editProductVm = new()
-      {
-         Id = productItemVm.Id,
-         Name = productItemVm.Name,
-         Quantity = productItemVm.Quantity,
-         Price = productItemVm.Price,
-      };
+      ProductModel productModel = product.MapToProductModel();
 
-      return View(editProductVm);
+      return View(productModel);
    }
 
-   [HttpPost("{id:int}/[action]")]
+   [HttpPost("[controller]/{id:int}")]
    [ValidateAntiForgeryToken]
-   public IActionResult Edit(int id, EditProductViewModel model)
+   public IActionResult Edit(int id, ProductModel model)
    {
-      if (ModelState is { IsValid: false })
-         return View(model);
+      if (id != model.Id) return BadRequest();
+      
+      if (ModelState is { IsValid: false }) return View(model);
 
-      _productRepository.UpdateProduct(id, model);
+      _productRepo.Update(model.MapToProductEntity());
 
       return RedirectToAction(nameof(Index));
    }
 
-   [HttpGet("{id:int}/[action]")]
+   [HttpGet("[controller]/{id:int}/delete")]
    public IActionResult Delete(int id) 
    {
-      _productRepository.DeleteProduct(id);
+      _productRepo.Delete(id);
       return RedirectToAction(nameof(Index));
    }
 }

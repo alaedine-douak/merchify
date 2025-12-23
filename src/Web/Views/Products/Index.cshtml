@@ -1,15 +1,15 @@
-﻿@model ProductListItemViewModel
+﻿@model IList<ProductModel>
 
 @{
 	ViewData["title"] = "Products";
 }
 
-<a asp-controller="products" asp-action="create">➕</a>
+<a asp-controller="Products" asp-action="Insert">➕</a>
 <br />
 <br />
 
 
-@if (Model is { Items: [] })
+@if (Model is null or { Count: 0 })
 {
 	<p>No products provided.</p>
 }
@@ -26,22 +26,22 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var product in Model.Items)
+			@foreach (var product in Model)
 			{
 				<tr>
 					<td>@product.Name</td>
-					<td>@product.Quantity.ToString()</td>
-					<td>@product.Price?.ToString("c")</td>
+					<td>@product.Qty.ToString()</td>
+					<td>@product.Price.ToString("C")</td>
 					<td>
-						<a asp-controller="products"
-							asp-action="edit"
+						<a asp-controller="Products"
+							asp-action="Edit"
 							asp-route-id="@product.Id">
 							🖋
 						</a>
 					</td>
 					<td>
-						<a asp-controller="products"
-							asp-action="delete"
+						<a asp-controller="Products"
+							asp-action="Delete"
 							asp-route-id="@product.Id"
 						>
 							❌

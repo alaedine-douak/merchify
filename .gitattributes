@@ -4,21 +4,20 @@
 
 ## Get latest from `dotnet new gitattributes`
 
-# Auto detect text files and perform LF normalization
-* text=auto
+# Set default behaviour, in case users don't have core.autocrlf set.
+*   text=auto
 
-#
-*/wwwroot/lib/** text eol=lf
+##remove UI libraries from the statistic
+src/Web/wwwroot/lib/** linguist-vendored
+src/Web/wwwroot/lib_npm/** linguist-vendored
 
-#
-# The above will handle all files NOT found below
-#
-*.css    text eol=lf
-*.js     text eol=lf
-*.cs     text diff=csharp
-*.cshtml text diff=html
-*.csx    text diff=csharp
-*.sln    text eol=crlf
+
+#specify the .cshtml files as HTML
+*.cshtml linguist-language=HTML
+
+# Declare files that will always have CRLF line endings on checkout.
+*.slnx   text eol=crlf
+*.csproj    text eol=crlf
 
 # Content below from: https://github.com/gitattributes/gitattributes/blob/master/Common.gitattributes
 
